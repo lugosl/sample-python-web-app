@@ -1,0 +1,1797 @@
+{
+ "Resources": {
+  "ec2Role38AB65C0": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ec2.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/AmazonSSMManagedInstanceCore"
+       ]
+      ]
+     },
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AmazonEC2RoleforAWSCodeDeploy"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/ec2Role/Resource"
+   }
+  },
+  "mainvpcC8EB9BA5": {
+   "Type": "AWS::EC2::VPC",
+   "Properties": {
+    "CidrBlock": "10.0.0.0/16",
+    "EnableDnsHostnames": true,
+    "EnableDnsSupport": true,
+    "InstanceTenancy": "default",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "Ec2CdkStack/main_vpc"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/Resource"
+   }
+  },
+  "mainvpcpub01Subnet1SubnetD3B2432C": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "us-east-1a",
+    "CidrBlock": "10.0.0.0/24",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "pub01"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "Ec2CdkStack/main_vpc/pub01Subnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "mainvpcC8EB9BA5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub01Subnet1/Subnet"
+   }
+  },
+  "mainvpcpub01Subnet1RouteTable57699460": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "Ec2CdkStack/main_vpc/pub01Subnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "mainvpcC8EB9BA5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub01Subnet1/RouteTable"
+   }
+  },
+  "mainvpcpub01Subnet1RouteTableAssociationEDA9B458": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "mainvpcpub01Subnet1RouteTable57699460"
+    },
+    "SubnetId": {
+     "Ref": "mainvpcpub01Subnet1SubnetD3B2432C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub01Subnet1/RouteTableAssociation"
+   }
+  },
+  "mainvpcpub01Subnet1DefaultRoute006AFCFA": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "mainvpcIGW9BB1AE36"
+    },
+    "RouteTableId": {
+     "Ref": "mainvpcpub01Subnet1RouteTable57699460"
+    }
+   },
+   "DependsOn": [
+    "mainvpcVPCGW2440C612"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub01Subnet1/DefaultRoute"
+   }
+  },
+  "mainvpcpub01Subnet2Subnet6B756808": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "us-east-1b",
+    "CidrBlock": "10.0.1.0/24",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "pub01"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "Ec2CdkStack/main_vpc/pub01Subnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "mainvpcC8EB9BA5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub01Subnet2/Subnet"
+   }
+  },
+  "mainvpcpub01Subnet2RouteTable1B45E14E": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "Ec2CdkStack/main_vpc/pub01Subnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "mainvpcC8EB9BA5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub01Subnet2/RouteTable"
+   }
+  },
+  "mainvpcpub01Subnet2RouteTableAssociation6F202CB1": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "mainvpcpub01Subnet2RouteTable1B45E14E"
+    },
+    "SubnetId": {
+     "Ref": "mainvpcpub01Subnet2Subnet6B756808"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub01Subnet2/RouteTableAssociation"
+   }
+  },
+  "mainvpcpub01Subnet2DefaultRoute612C05EF": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "mainvpcIGW9BB1AE36"
+    },
+    "RouteTableId": {
+     "Ref": "mainvpcpub01Subnet2RouteTable1B45E14E"
+    }
+   },
+   "DependsOn": [
+    "mainvpcVPCGW2440C612"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub01Subnet2/DefaultRoute"
+   }
+  },
+  "mainvpcpub01Subnet3Subnet1D9E8839": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "us-east-1c",
+    "CidrBlock": "10.0.2.0/24",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "pub01"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "Ec2CdkStack/main_vpc/pub01Subnet3"
+     }
+    ],
+    "VpcId": {
+     "Ref": "mainvpcC8EB9BA5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub01Subnet3/Subnet"
+   }
+  },
+  "mainvpcpub01Subnet3RouteTable7C12DD4A": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "Ec2CdkStack/main_vpc/pub01Subnet3"
+     }
+    ],
+    "VpcId": {
+     "Ref": "mainvpcC8EB9BA5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub01Subnet3/RouteTable"
+   }
+  },
+  "mainvpcpub01Subnet3RouteTableAssociation2029CB2D": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "mainvpcpub01Subnet3RouteTable7C12DD4A"
+    },
+    "SubnetId": {
+     "Ref": "mainvpcpub01Subnet3Subnet1D9E8839"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub01Subnet3/RouteTableAssociation"
+   }
+  },
+  "mainvpcpub01Subnet3DefaultRouteBD72D74E": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "mainvpcIGW9BB1AE36"
+    },
+    "RouteTableId": {
+     "Ref": "mainvpcpub01Subnet3RouteTable7C12DD4A"
+    }
+   },
+   "DependsOn": [
+    "mainvpcVPCGW2440C612"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub01Subnet3/DefaultRoute"
+   }
+  },
+  "mainvpcpub02Subnet1SubnetA5C6EB18": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "us-east-1a",
+    "CidrBlock": "10.0.3.0/24",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "pub02"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "Ec2CdkStack/main_vpc/pub02Subnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "mainvpcC8EB9BA5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub02Subnet1/Subnet"
+   }
+  },
+  "mainvpcpub02Subnet1RouteTable9F6846C4": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "Ec2CdkStack/main_vpc/pub02Subnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "mainvpcC8EB9BA5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub02Subnet1/RouteTable"
+   }
+  },
+  "mainvpcpub02Subnet1RouteTableAssociationA6ED341D": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "mainvpcpub02Subnet1RouteTable9F6846C4"
+    },
+    "SubnetId": {
+     "Ref": "mainvpcpub02Subnet1SubnetA5C6EB18"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub02Subnet1/RouteTableAssociation"
+   }
+  },
+  "mainvpcpub02Subnet1DefaultRoute83B7DB61": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "mainvpcIGW9BB1AE36"
+    },
+    "RouteTableId": {
+     "Ref": "mainvpcpub02Subnet1RouteTable9F6846C4"
+    }
+   },
+   "DependsOn": [
+    "mainvpcVPCGW2440C612"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub02Subnet1/DefaultRoute"
+   }
+  },
+  "mainvpcpub02Subnet2Subnet40A4D62F": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "us-east-1b",
+    "CidrBlock": "10.0.4.0/24",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "pub02"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "Ec2CdkStack/main_vpc/pub02Subnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "mainvpcC8EB9BA5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub02Subnet2/Subnet"
+   }
+  },
+  "mainvpcpub02Subnet2RouteTable384BED2F": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "Ec2CdkStack/main_vpc/pub02Subnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "mainvpcC8EB9BA5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub02Subnet2/RouteTable"
+   }
+  },
+  "mainvpcpub02Subnet2RouteTableAssociation14A02C3C": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "mainvpcpub02Subnet2RouteTable384BED2F"
+    },
+    "SubnetId": {
+     "Ref": "mainvpcpub02Subnet2Subnet40A4D62F"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub02Subnet2/RouteTableAssociation"
+   }
+  },
+  "mainvpcpub02Subnet2DefaultRouteCABD8CBD": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "mainvpcIGW9BB1AE36"
+    },
+    "RouteTableId": {
+     "Ref": "mainvpcpub02Subnet2RouteTable384BED2F"
+    }
+   },
+   "DependsOn": [
+    "mainvpcVPCGW2440C612"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub02Subnet2/DefaultRoute"
+   }
+  },
+  "mainvpcpub02Subnet3SubnetDDB339EC": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "us-east-1c",
+    "CidrBlock": "10.0.5.0/24",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "pub02"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "Ec2CdkStack/main_vpc/pub02Subnet3"
+     }
+    ],
+    "VpcId": {
+     "Ref": "mainvpcC8EB9BA5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub02Subnet3/Subnet"
+   }
+  },
+  "mainvpcpub02Subnet3RouteTable09BB8F85": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "Ec2CdkStack/main_vpc/pub02Subnet3"
+     }
+    ],
+    "VpcId": {
+     "Ref": "mainvpcC8EB9BA5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub02Subnet3/RouteTable"
+   }
+  },
+  "mainvpcpub02Subnet3RouteTableAssociation1DA2C9BA": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "mainvpcpub02Subnet3RouteTable09BB8F85"
+    },
+    "SubnetId": {
+     "Ref": "mainvpcpub02Subnet3SubnetDDB339EC"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub02Subnet3/RouteTableAssociation"
+   }
+  },
+  "mainvpcpub02Subnet3DefaultRoute04882229": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "mainvpcIGW9BB1AE36"
+    },
+    "RouteTableId": {
+     "Ref": "mainvpcpub02Subnet3RouteTable09BB8F85"
+    }
+   },
+   "DependsOn": [
+    "mainvpcVPCGW2440C612"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub02Subnet3/DefaultRoute"
+   }
+  },
+  "mainvpcpub03Subnet1SubnetD307F57D": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "us-east-1a",
+    "CidrBlock": "10.0.6.0/24",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "pub03"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "Ec2CdkStack/main_vpc/pub03Subnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "mainvpcC8EB9BA5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub03Subnet1/Subnet"
+   }
+  },
+  "mainvpcpub03Subnet1RouteTable015E0EFF": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "Ec2CdkStack/main_vpc/pub03Subnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "mainvpcC8EB9BA5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub03Subnet1/RouteTable"
+   }
+  },
+  "mainvpcpub03Subnet1RouteTableAssociation55F942AA": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "mainvpcpub03Subnet1RouteTable015E0EFF"
+    },
+    "SubnetId": {
+     "Ref": "mainvpcpub03Subnet1SubnetD307F57D"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub03Subnet1/RouteTableAssociation"
+   }
+  },
+  "mainvpcpub03Subnet1DefaultRouteD2A60BB4": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "mainvpcIGW9BB1AE36"
+    },
+    "RouteTableId": {
+     "Ref": "mainvpcpub03Subnet1RouteTable015E0EFF"
+    }
+   },
+   "DependsOn": [
+    "mainvpcVPCGW2440C612"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub03Subnet1/DefaultRoute"
+   }
+  },
+  "mainvpcpub03Subnet2Subnet84D6EE1A": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "us-east-1b",
+    "CidrBlock": "10.0.7.0/24",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "pub03"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "Ec2CdkStack/main_vpc/pub03Subnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "mainvpcC8EB9BA5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub03Subnet2/Subnet"
+   }
+  },
+  "mainvpcpub03Subnet2RouteTableE6DA8F09": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "Ec2CdkStack/main_vpc/pub03Subnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "mainvpcC8EB9BA5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub03Subnet2/RouteTable"
+   }
+  },
+  "mainvpcpub03Subnet2RouteTableAssociation4E50B22B": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "mainvpcpub03Subnet2RouteTableE6DA8F09"
+    },
+    "SubnetId": {
+     "Ref": "mainvpcpub03Subnet2Subnet84D6EE1A"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub03Subnet2/RouteTableAssociation"
+   }
+  },
+  "mainvpcpub03Subnet2DefaultRoute9335AF15": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "mainvpcIGW9BB1AE36"
+    },
+    "RouteTableId": {
+     "Ref": "mainvpcpub03Subnet2RouteTableE6DA8F09"
+    }
+   },
+   "DependsOn": [
+    "mainvpcVPCGW2440C612"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub03Subnet2/DefaultRoute"
+   }
+  },
+  "mainvpcpub03Subnet3Subnet4BD7AC3F": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "us-east-1c",
+    "CidrBlock": "10.0.8.0/24",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "pub03"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "Ec2CdkStack/main_vpc/pub03Subnet3"
+     }
+    ],
+    "VpcId": {
+     "Ref": "mainvpcC8EB9BA5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub03Subnet3/Subnet"
+   }
+  },
+  "mainvpcpub03Subnet3RouteTable83A9C8AA": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "Ec2CdkStack/main_vpc/pub03Subnet3"
+     }
+    ],
+    "VpcId": {
+     "Ref": "mainvpcC8EB9BA5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub03Subnet3/RouteTable"
+   }
+  },
+  "mainvpcpub03Subnet3RouteTableAssociation2ED0685B": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "mainvpcpub03Subnet3RouteTable83A9C8AA"
+    },
+    "SubnetId": {
+     "Ref": "mainvpcpub03Subnet3Subnet4BD7AC3F"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub03Subnet3/RouteTableAssociation"
+   }
+  },
+  "mainvpcpub03Subnet3DefaultRoute5FE80AC0": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "mainvpcIGW9BB1AE36"
+    },
+    "RouteTableId": {
+     "Ref": "mainvpcpub03Subnet3RouteTable83A9C8AA"
+    }
+   },
+   "DependsOn": [
+    "mainvpcVPCGW2440C612"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/pub03Subnet3/DefaultRoute"
+   }
+  },
+  "mainvpcIGW9BB1AE36": {
+   "Type": "AWS::EC2::InternetGateway",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "Ec2CdkStack/main_vpc"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/IGW"
+   }
+  },
+  "mainvpcVPCGW2440C612": {
+   "Type": "AWS::EC2::VPCGatewayAttachment",
+   "Properties": {
+    "InternetGatewayId": {
+     "Ref": "mainvpcIGW9BB1AE36"
+    },
+    "VpcId": {
+     "Ref": "mainvpcC8EB9BA5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/VPCGW"
+   }
+  },
+  "mainvpcRestrictDefaultSecurityGroupCustomResourceF5AB0E96": {
+   "Type": "Custom::VpcRestrictDefaultSG",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E",
+      "Arn"
+     ]
+    },
+    "DefaultSecurityGroupId": {
+     "Fn::GetAtt": [
+      "mainvpcC8EB9BA5",
+      "DefaultSecurityGroup"
+     ]
+    },
+    "Account": "641159396439"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/main_vpc/RestrictDefaultSecurityGroupCustomResource/Default"
+   }
+  },
+  "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Version": "2012-10-17",
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ]
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Sub": "arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+     }
+    ],
+    "Policies": [
+     {
+      "PolicyName": "Inline",
+      "PolicyDocument": {
+       "Version": "2012-10-17",
+       "Statement": [
+        {
+         "Effect": "Allow",
+         "Action": [
+          "ec2:AuthorizeSecurityGroupIngress",
+          "ec2:AuthorizeSecurityGroupEgress",
+          "ec2:RevokeSecurityGroupIngress",
+          "ec2:RevokeSecurityGroupEgress"
+         ],
+         "Resource": [
+          {
+           "Fn::Join": [
+            "",
+            [
+             "arn:aws:ec2:us-east-1:641159396439:security-group/",
+             {
+              "Fn::GetAtt": [
+               "mainvpcC8EB9BA5",
+               "DefaultSecurityGroup"
+              ]
+             }
+            ]
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Role"
+   }
+  },
+  "CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-641159396439-us-east-1",
+     "S3Key": "ee7de53d64cc9d6248fa6aa550f92358f6c907b5efd6f3298aeab1b5e7ea358a.zip"
+    },
+    "Timeout": 900,
+    "MemorySize": 128,
+    "Handler": "__entrypoint__.handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Description": "Lambda function for removing all inbound/outbound rules from the VPC default security group"
+   },
+   "DependsOn": [
+    "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler",
+    "aws:asset:path": "asset.ee7de53d64cc9d6248fa6aa550f92358f6c907b5efd6f3298aeab1b5e7ea358a",
+    "aws:asset:property": "Code"
+   }
+  },
+  "websgC0F26C34": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "Allows Inbound HTTP traffic to the web server.",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "SecurityGroupIngress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "from 0.0.0.0/0:80",
+      "FromPort": 80,
+      "IpProtocol": "tcp",
+      "ToPort": 80
+     }
+    ],
+    "VpcId": {
+     "Ref": "mainvpcC8EB9BA5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/web_sg/Resource"
+   }
+  },
+  "webserverInstanceProfileA537705D": {
+   "Type": "AWS::IAM::InstanceProfile",
+   "Properties": {
+    "Roles": [
+     {
+      "Ref": "ec2Role38AB65C0"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/web_server/InstanceProfile"
+   }
+  },
+  "webserverA71B539D": {
+   "Type": "AWS::EC2::Instance",
+   "Properties": {
+    "AvailabilityZone": "us-east-1a",
+    "IamInstanceProfile": {
+     "Ref": "webserverInstanceProfileA537705D"
+    },
+    "ImageId": {
+     "Ref": "SsmParameterValueawsserviceamiamazonlinuxlatestal2023amikernel61x8664C96584B6F00A464EAD1953AFF4B05118Parameter"
+    },
+    "InstanceType": "t3.micro",
+    "SecurityGroupIds": [
+     {
+      "Fn::GetAtt": [
+       "websgC0F26C34",
+       "GroupId"
+      ]
+     }
+    ],
+    "SubnetId": {
+     "Ref": "mainvpcpub01Subnet1SubnetD3B2432C"
+    },
+    "Tags": [
+     {
+      "Key": "application-name",
+      "Value": "python-web"
+     },
+     {
+      "Key": "Name",
+      "Value": "Ec2CdkStack/web_server"
+     },
+     {
+      "Key": "stage",
+      "Value": "prod"
+     }
+    ],
+    "UserData": {
+     "Fn::Base64": "#!/bin/bash\n#!/bin/bash -xe\n# Install OS packages\nyum update -y\nyum groupinstall -y \"Development Tools\"\namazon-linux-extras install -y nginx1\nyum install -y nginx python3.11 python3.11-pip python3.11-devel ruby wget\npython3.11 -m pip install pipenv wheel\npython3.11 -m pip install uwsgi\n\n# Code Deploy Agent\ncd /home/ec2-user\nwget https://aws-codedeploy-us-west-2.s3.us-west-2.amazonaws.com/latest/install\nchmod +x ./install\n./install auto"
+    }
+   },
+   "DependsOn": [
+    "ec2Role38AB65C0"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/web_server/Resource"
+   }
+  },
+  "pythonwebpipelineArtifactsBucket10B208AB": {
+   "Type": "AWS::S3::Bucket",
+   "Properties": {
+    "BucketEncryption": {
+     "ServerSideEncryptionConfiguration": [
+      {
+       "ServerSideEncryptionByDefault": {
+        "SSEAlgorithm": "aws:kms"
+       }
+      }
+     ]
+    },
+    "PublicAccessBlockConfiguration": {
+     "BlockPublicAcls": true,
+     "BlockPublicPolicy": true,
+     "IgnorePublicAcls": true,
+     "RestrictPublicBuckets": true
+    }
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/python_web_pipeline/ArtifactsBucket/Resource"
+   }
+  },
+  "pythonwebpipelineArtifactsBucketPolicyAE3F4DD1": {
+   "Type": "AWS::S3::BucketPolicy",
+   "Properties": {
+    "Bucket": {
+     "Ref": "pythonwebpipelineArtifactsBucket10B208AB"
+    },
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "s3:*",
+       "Condition": {
+        "Bool": {
+         "aws:SecureTransport": "false"
+        }
+       },
+       "Effect": "Deny",
+       "Principal": {
+        "AWS": "*"
+       },
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "pythonwebpipelineArtifactsBucket10B208AB",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "pythonwebpipelineArtifactsBucket10B208AB",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/python_web_pipeline/ArtifactsBucket/Policy/Resource"
+   }
+  },
+  "pythonwebpipelineRole03876441": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "codepipeline.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/python_web_pipeline/Role/Resource"
+   }
+  },
+  "pythonwebpipelineRoleDefaultPolicy40E25E2C": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "s3:Abort*",
+        "s3:DeleteObject*",
+        "s3:GetBucket*",
+        "s3:GetObject*",
+        "s3:List*",
+        "s3:PutObject",
+        "s3:PutObjectLegalHold",
+        "s3:PutObjectRetention",
+        "s3:PutObjectTagging",
+        "s3:PutObjectVersionTagging"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "pythonwebpipelineArtifactsBucket10B208AB",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "pythonwebpipelineArtifactsBucket10B208AB",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "pythonwebpipelineBuildTestPythonCodePipelineActionRole328D0380",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::GetAtt": [
+          "pythonwebpipelineDeployPythonAppDeploymentCodePipelineActionRoleEE97DF4A",
+          "Arn"
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "pythonwebpipelineRoleDefaultPolicy40E25E2C",
+    "Roles": [
+     {
+      "Ref": "pythonwebpipelineRole03876441"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/python_web_pipeline/Role/DefaultPolicy/Resource"
+   }
+  },
+  "pythonwebpipeline3CD50BBE": {
+   "Type": "AWS::CodePipeline::Pipeline",
+   "Properties": {
+    "ArtifactStore": {
+     "Location": {
+      "Ref": "pythonwebpipelineArtifactsBucket10B208AB"
+     },
+     "Type": "S3"
+    },
+    "Name": "python-webApp",
+    "PipelineType": "V2",
+    "RoleArn": {
+     "Fn::GetAtt": [
+      "pythonwebpipelineRole03876441",
+      "Arn"
+     ]
+    },
+    "Stages": [
+     {
+      "Actions": [
+       {
+        "ActionTypeId": {
+         "Category": "Source",
+         "Owner": "ThirdParty",
+         "Provider": "GitHub",
+         "Version": "1"
+        },
+        "Configuration": {
+         "Owner": "darko-mesaros",
+         "Repo": "sample-python-web-app",
+         "Branch": "main",
+         "OAuthToken": "{{resolve:secretsmanager:github-oauth-token:SecretString:::}}",
+         "PollForSourceChanges": false
+        },
+        "Name": "GithubSource",
+        "OutputArtifacts": [
+         {
+          "Name": "Artifact_Source_GithubSource"
+         }
+        ],
+        "RunOrder": 1
+       }
+      ],
+      "Name": "Source"
+     },
+     {
+      "Actions": [
+       {
+        "ActionTypeId": {
+         "Category": "Build",
+         "Owner": "AWS",
+         "Provider": "CodeBuild",
+         "Version": "1"
+        },
+        "Configuration": {
+         "ProjectName": {
+          "Ref": "pythonTestProject101099A6"
+         }
+        },
+        "InputArtifacts": [
+         {
+          "Name": "Artifact_Source_GithubSource"
+         }
+        ],
+        "Name": "TestPython",
+        "OutputArtifacts": [
+         {
+          "Name": "Artifact_Build_TestPython"
+         }
+        ],
+        "RoleArn": {
+         "Fn::GetAtt": [
+          "pythonwebpipelineBuildTestPythonCodePipelineActionRole328D0380",
+          "Arn"
+         ]
+        },
+        "RunOrder": 1
+       }
+      ],
+      "Name": "Build"
+     },
+     {
+      "Actions": [
+       {
+        "ActionTypeId": {
+         "Category": "Deploy",
+         "Owner": "AWS",
+         "Provider": "CodeDeploy",
+         "Version": "1"
+        },
+        "Configuration": {
+         "ApplicationName": {
+          "Ref": "pythondeployapplicationE4A7E861"
+         },
+         "DeploymentGroupName": {
+          "Ref": "PythonAppDeployGroup4F056303"
+         }
+        },
+        "InputArtifacts": [
+         {
+          "Name": "Artifact_Source_GithubSource"
+         }
+        ],
+        "Name": "PythonAppDeployment",
+        "RoleArn": {
+         "Fn::GetAtt": [
+          "pythonwebpipelineDeployPythonAppDeploymentCodePipelineActionRoleEE97DF4A",
+          "Arn"
+         ]
+        },
+        "RunOrder": 1
+       }
+      ],
+      "Name": "Deploy"
+     }
+    ]
+   },
+   "DependsOn": [
+    "pythonwebpipelineRoleDefaultPolicy40E25E2C",
+    "pythonwebpipelineRole03876441"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/python_web_pipeline/Resource"
+   }
+  },
+  "pythonwebpipelineSourceGithubSourceWebhookResource7D49AE15": {
+   "Type": "AWS::CodePipeline::Webhook",
+   "Properties": {
+    "Authentication": "GITHUB_HMAC",
+    "AuthenticationConfiguration": {
+     "SecretToken": "{{resolve:secretsmanager:github-oauth-token:SecretString:::}}"
+    },
+    "Filters": [
+     {
+      "JsonPath": "$.ref",
+      "MatchEquals": "refs/heads/{Branch}"
+     }
+    ],
+    "RegisterWithThirdParty": true,
+    "TargetAction": "GithubSource",
+    "TargetPipeline": {
+     "Ref": "pythonwebpipeline3CD50BBE"
+    },
+    "TargetPipelineVersion": 1
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/python_web_pipeline/Source/GithubSource/WebhookResource"
+   }
+  },
+  "pythonwebpipelineBuildTestPythonCodePipelineActionRole328D0380": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": "arn:aws:iam::641159396439:root"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/python_web_pipeline/Build/TestPython/CodePipelineActionRole/Resource"
+   }
+  },
+  "pythonwebpipelineBuildTestPythonCodePipelineActionRoleDefaultPolicy943FB383": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "codebuild:BatchGetBuilds",
+        "codebuild:StartBuild",
+        "codebuild:StopBuild"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "pythonTestProject101099A6",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "pythonwebpipelineBuildTestPythonCodePipelineActionRoleDefaultPolicy943FB383",
+    "Roles": [
+     {
+      "Ref": "pythonwebpipelineBuildTestPythonCodePipelineActionRole328D0380"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/python_web_pipeline/Build/TestPython/CodePipelineActionRole/DefaultPolicy/Resource"
+   }
+  },
+  "pythonwebpipelineDeployPythonAppDeploymentCodePipelineActionRoleEE97DF4A": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": "arn:aws:iam::641159396439:root"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/python_web_pipeline/Deploy/PythonAppDeployment/CodePipelineActionRole/Resource"
+   }
+  },
+  "pythonwebpipelineDeployPythonAppDeploymentCodePipelineActionRoleDefaultPolicy6B002082": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "codedeploy:GetApplicationRevision",
+        "codedeploy:RegisterApplicationRevision"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:aws:codedeploy:us-east-1:641159396439:application:",
+          {
+           "Ref": "pythondeployapplicationE4A7E861"
+          }
+         ]
+        ]
+       }
+      },
+      {
+       "Action": [
+        "codedeploy:CreateDeployment",
+        "codedeploy:GetDeployment"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:aws:codedeploy:us-east-1:641159396439:deploymentgroup:",
+          {
+           "Ref": "pythondeployapplicationE4A7E861"
+          },
+          "/",
+          {
+           "Ref": "PythonAppDeployGroup4F056303"
+          }
+         ]
+        ]
+       }
+      },
+      {
+       "Action": "codedeploy:GetDeploymentConfig",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":codedeploy:us-east-1:641159396439:deploymentconfig:CodeDeployDefault.OneAtATime"
+         ]
+        ]
+       }
+      },
+      {
+       "Action": [
+        "s3:GetBucket*",
+        "s3:GetObject*",
+        "s3:List*"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "pythonwebpipelineArtifactsBucket10B208AB",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "pythonwebpipelineArtifactsBucket10B208AB",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "pythonwebpipelineDeployPythonAppDeploymentCodePipelineActionRoleDefaultPolicy6B002082",
+    "Roles": [
+     {
+      "Ref": "pythonwebpipelineDeployPythonAppDeploymentCodePipelineActionRoleEE97DF4A"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/python_web_pipeline/Deploy/PythonAppDeployment/CodePipelineActionRole/DefaultPolicy/Resource"
+   }
+  },
+  "pythonTestProjectRole5A2FA065": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "codebuild.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/pythonTestProject/Role/Resource"
+   }
+  },
+  "pythonTestProjectRoleDefaultPolicyF5E24080": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:aws:logs:us-east-1:641159396439:log-group:/aws/codebuild/",
+           {
+            "Ref": "pythonTestProject101099A6"
+           },
+           ":*"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:aws:logs:us-east-1:641159396439:log-group:/aws/codebuild/",
+           {
+            "Ref": "pythonTestProject101099A6"
+           }
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "codebuild:BatchPutCodeCoverages",
+        "codebuild:BatchPutTestCases",
+        "codebuild:CreateReport",
+        "codebuild:CreateReportGroup",
+        "codebuild:UpdateReport"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:aws:codebuild:us-east-1:641159396439:report-group/",
+          {
+           "Ref": "pythonTestProject101099A6"
+          },
+          "-*"
+         ]
+        ]
+       }
+      },
+      {
+       "Action": [
+        "s3:Abort*",
+        "s3:DeleteObject*",
+        "s3:GetBucket*",
+        "s3:GetObject*",
+        "s3:List*",
+        "s3:PutObject",
+        "s3:PutObjectLegalHold",
+        "s3:PutObjectRetention",
+        "s3:PutObjectTagging",
+        "s3:PutObjectVersionTagging"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "pythonwebpipelineArtifactsBucket10B208AB",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "pythonwebpipelineArtifactsBucket10B208AB",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "pythonTestProjectRoleDefaultPolicyF5E24080",
+    "Roles": [
+     {
+      "Ref": "pythonTestProjectRole5A2FA065"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/pythonTestProject/Role/DefaultPolicy/Resource"
+   }
+  },
+  "pythonTestProject101099A6": {
+   "Type": "AWS::CodeBuild::Project",
+   "Properties": {
+    "Artifacts": {
+     "Type": "CODEPIPELINE"
+    },
+    "Cache": {
+     "Type": "NO_CACHE"
+    },
+    "EncryptionKey": "alias/aws/s3",
+    "Environment": {
+     "ComputeType": "BUILD_GENERAL1_SMALL",
+     "Image": "aws/codebuild/amazonlinux2-x86_64-standard:5.0",
+     "ImagePullCredentialsType": "CODEBUILD",
+     "PrivilegedMode": false,
+     "Type": "LINUX_CONTAINER"
+    },
+    "ServiceRole": {
+     "Fn::GetAtt": [
+      "pythonTestProjectRole5A2FA065",
+      "Arn"
+     ]
+    },
+    "Source": {
+     "Type": "CODEPIPELINE"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/pythonTestProject/Resource"
+   }
+  },
+  "pythondeployapplicationE4A7E861": {
+   "Type": "AWS::CodeDeploy::Application",
+   "Properties": {
+    "ApplicationName": "python-webApp",
+    "ComputePlatform": "Server"
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/python_deploy_application/Resource"
+   }
+  },
+  "PythonAppDeployGroupRole9B700A0A": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "codedeploy.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSCodeDeployRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/PythonAppDeployGroup/Role/Resource"
+   }
+  },
+  "PythonAppDeployGroup4F056303": {
+   "Type": "AWS::CodeDeploy::DeploymentGroup",
+   "Properties": {
+    "AlarmConfiguration": {
+     "Enabled": false
+    },
+    "ApplicationName": {
+     "Ref": "pythondeployapplicationE4A7E861"
+    },
+    "AutoRollbackConfiguration": {
+     "Enabled": true,
+     "Events": [
+      "DEPLOYMENT_FAILURE"
+     ]
+    },
+    "DeploymentGroupName": "PythonAppDeploymentGroup",
+    "Ec2TagSet": {
+     "Ec2TagSetList": [
+      {
+       "Ec2TagGroup": [
+        {
+         "Key": "application-name",
+         "Type": "KEY_AND_VALUE",
+         "Value": "python-web"
+        },
+        {
+         "Key": "stage",
+         "Type": "KEY_AND_VALUE",
+         "Value": "prod"
+        },
+        {
+         "Key": "stage",
+         "Type": "KEY_AND_VALUE",
+         "Value": "stage"
+        }
+       ]
+      }
+     ]
+    },
+    "ServiceRoleArn": {
+     "Fn::GetAtt": [
+      "PythonAppDeployGroupRole9B700A0A",
+      "Arn"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/PythonAppDeployGroup/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/21STW/CMAz9LdxDtjJNYkdgEtppVZnYcUpTA6ZtUuUDVFX973Ob0sK0U/yeLfv5OQsevS7580xc7Vxm+bzAlDc7J2TOiPppUJS8SXQBbHNQt/dDWSeUhNjoAxIV6wJl3WVC1DKQC97sK9lx+3jDYp9SYudTBa7jpijR3sGXSEPnwE/cylotUTjUaiwOChwYqtwKB1dRD2MGtHKk/1SCcmwH0ht09dZoX/UDHojbIvdLtUzqDCqsoEAFvImHqF/vLv6G9KR13jL7wpu1l3nYZ4jCMxnzgANYCzsMSz0W2TSJbD2D7LsNYSgjVYWu6TxgLmBWVUXNRmvuYSh478s7G8bt/1BtyxKw2pvOAW+dLidIZv+fIkkXzMB08hndBxx9lyOqY69XGFEC3aYDn95VnrQr0s7P9ukSLXn0xqPZ2SLOjVcOS+BJeH8BZrUok4kCAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "Ec2CdkStack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Parameters": {
+  "SsmParameterValueawsserviceamiamazonlinuxlatestal2023amikernel61x8664C96584B6F00A464EAD1953AFF4B05118Parameter": {
+   "Type": "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>",
+   "Default": "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-x86_64"
+  },
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Outputs": {
+  "IPAddress": {
+   "Value": {
+    "Fn::GetAtt": [
+     "webserverA71B539D",
+     "PublicIp"
+    ]
+   }
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}
